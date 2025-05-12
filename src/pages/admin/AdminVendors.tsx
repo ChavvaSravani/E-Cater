@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, MoreVertical, Star, MapPin, Phone, Mail, Globe, Check, X } from "lucide-react";
+import { Search, MoreVertical, Star, MapPin, Phone, Mail, Globe, Check, X, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 // Sample vendor data
