@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { upload } from "lucide-react";
+import { Upload } from "lucide-react";
 
 const formSchema = z.object({
   businessName: z.string().min(2, {
@@ -290,7 +289,7 @@ const VendorRegistration = () => {
                       disabled={isUploading}
                       className="flex items-center"
                     >
-                      <upload className="mr-2 h-4 w-4" />
+                      <Upload className="mr-2 h-4 w-4" />
                       {isUploading ? "Uploading..." : "Upload Logo"}
                     </Button>
                     <span className="ml-3 text-sm text-gray-500">Recommended size: 400x400px</span>
