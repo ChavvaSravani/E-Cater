@@ -12,7 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { upload, indian-rupee } from "lucide-react";
+import { Upload, IndianRupee } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -300,7 +300,7 @@ const FoodItemUpload = () => {
                           disabled={isUploading}
                           className="flex items-center mx-auto"
                         >
-                          <upload className="mr-2 h-4 w-4" />
+                          <Upload className="mr-2 h-4 w-4" />
                           {isUploading ? "Uploading..." : "Upload Image"}
                         </Button>
                         <p className="mt-2 text-sm text-gray-500">
