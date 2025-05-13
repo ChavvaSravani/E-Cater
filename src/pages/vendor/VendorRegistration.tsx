@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -11,7 +12,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { Upload } from "lucide-react";
+import { Upload, IndianRupee, Phone, MapPin, User } from "lucide-react";
+
+// List of Indian states
+const INDIAN_STATES = [
+  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", 
+  "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", 
+  "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", 
+  "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", 
+  "Uttarakhand", "West Bengal", "Delhi", "Jammu and Kashmir", "Ladakh", "Puducherry", 
+  "Chandigarh", "Andaman and Nicobar Islands", "Dadra and Nagar Haveli and Daman and Diu", 
+  "Lakshadweep"
+];
 
 const formSchema = z.object({
   businessName: z.string().min(2, {
@@ -32,15 +44,26 @@ const formSchema = z.object({
   city: z.string().min(2, {
     message: "City must be at least 2 characters.",
   }),
+  state: z.string().min(1, {
+    message: "Please select your state.",
+  }),
+  pincode: z.string().min(6).max(6, {
+    message: "Pincode must be 6 digits.",
+  }),
   cuisineType: z.string().min(1, {
     message: "Please select at least one cuisine type.",
   }),
   description: z.string().min(10, {
     message: "Description must be at least 10 characters.",
   }),
-  gstNumber: z.string().optional(),
+  gstNumber: z.string().min(15).max(15, {
+    message: "GST Number must be exactly 15 characters.",
+  }),
   fssaiLicense: z.string().min(5, {
     message: "FSSAI License number is required.",
+  }),
+  registrationFee: z.literal(true, {
+    message: "You must agree to pay the registration fee to continue.",
   })
 });
 
@@ -48,6 +71,7 @@ const VendorRegistration = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isUploading, setIsUploading] = useState(false);
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
   
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -55,36 +79,93 @@ const VendorRegistration = () => {
       businessName: "",
       ownerName: "",
       email: "",
-      phone: "",
+      phone: "+91 70326 50276",
       address: "",
       city: "",
+      state: "",
+      pincode: "",
       cuisineType: "",
       description: "",
       gstNumber: "",
-      fssaiLicense: ""
+      fssaiLicense: "",
+      registrationFee: false
     }
   });
   
-  const onSubmit = async (values) => {
-    try {
-      // In a real app, you'd send this data to your backend
-      console.log("Vendor registration data:", values);
-      
+  const handleRazorpayPayment = () => {
+    setPaymentProcessing(true);
+    
+    // Load Razorpay script
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    script.onload = () => {
+      // Create Razorpay options
+      const options = {
+        key: 'rzp_test_yVx1JWkWEc3urX', // Replace with your test key
+        amount: 100000, // Amount is in currency subunits (100000 = ₹1000)
+        currency: 'INR',
+        name: 'CateringBook',
+        description: 'Vendor Registration Fee',
+        image: 'https://placeholder.co/100x100',
+        handler: function(response) {
+          // Payment success
+          console.log("Payment success:", response);
+          
+          // In a real app, you'd verify this payment on the server
+          toast({
+            title: "Payment Successful",
+            description: `Payment ID: ${response.razorpay_payment_id}`,
+          });
+          
+          // Submit the form data
+          const formData = form.getValues();
+          console.log("Vendor registration data:", formData);
+          
+          toast({
+            title: "Registration Submitted",
+            description: "Your vendor registration request has been submitted for review.",
+          });
+          
+          setTimeout(() => {
+            navigate("/vendor/dashboard");
+          }, 2000);
+        },
+        prefill: {
+          name: form.getValues().ownerName,
+          email: form.getValues().email,
+          contact: form.getValues().phone
+        },
+        notes: {
+          business_name: form.getValues().businessName
+        },
+        theme: {
+          color: '#FF8C00' // catering-orange color
+        }
+      };
+
+      // Initialize Razorpay
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+      setPaymentProcessing(false);
+    };
+    
+    script.onerror = () => {
       toast({
-        title: "Registration Submitted",
-        description: "Your vendor registration request has been submitted for review.",
-      });
-      
-      setTimeout(() => {
-        navigate("/vendor/dashboard");
-      }, 2000);
-    } catch (error) {
-      console.error("Registration error:", error);
-      toast({
-        title: "Registration Failed",
-        description: "There was an error submitting your registration. Please try again.",
+        title: "Payment Error",
+        description: "Could not load payment gateway. Please try again.",
         variant: "destructive",
       });
+      setPaymentProcessing(false);
+    };
+    
+    document.body.appendChild(script);
+  };
+  
+  const onSubmit = async (values) => {
+    // Validate the form before proceeding to payment
+    if (form.formState.isValid) {
+      handleRazorpayPayment();
     }
   };
   
@@ -136,7 +217,10 @@ const VendorRegistration = () => {
                     <FormItem>
                       <FormLabel>Owner Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Owner or manager name" {...field} />
+                        <div className="relative">
+                          <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                          <Input placeholder="Owner or manager name" className="pl-10" {...field} />
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -165,7 +249,10 @@ const VendorRegistration = () => {
                       <FormItem>
                         <FormLabel>Phone Number</FormLabel>
                         <FormControl>
-                          <Input placeholder="Contact phone number" {...field} />
+                          <div className="relative">
+                            <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                            <Input placeholder="Contact phone number" className="pl-10" {...field} />
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -180,26 +267,70 @@ const VendorRegistration = () => {
                     <FormItem>
                       <FormLabel>Business Address</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Full address" {...field} />
+                        <div className="relative">
+                          <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                          <Textarea placeholder="Full address" className="pl-10" {...field} />
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="city"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>City</FormLabel>
-                      <FormControl>
-                        <Input placeholder="City" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="city"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>City</FormLabel>
+                        <FormControl>
+                          <Input placeholder="City" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="state"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>State</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select state" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="max-h-80">
+                            {INDIAN_STATES.map((state) => (
+                              <SelectItem key={state} value={state.toLowerCase()}>
+                                {state}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="pincode"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Pincode</FormLabel>
+                        <FormControl>
+                          <Input placeholder="6-digit pincode" maxLength={6} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
                 <FormField
                   control={form.control}
@@ -215,15 +346,18 @@ const VendorRegistration = () => {
                         </FormControl>
                         <SelectContent>
                           <SelectItem value="indian">Indian</SelectItem>
-                          <SelectItem value="chinese">Chinese</SelectItem>
-                          <SelectItem value="italian">Italian</SelectItem>
-                          <SelectItem value="continental">Continental</SelectItem>
-                          <SelectItem value="multi-cuisine">Multi-Cuisine</SelectItem>
                           <SelectItem value="south-indian">South Indian</SelectItem>
                           <SelectItem value="north-indian">North Indian</SelectItem>
                           <SelectItem value="punjabi">Punjabi</SelectItem>
                           <SelectItem value="bengali">Bengali</SelectItem>
                           <SelectItem value="gujarati">Gujarati</SelectItem>
+                          <SelectItem value="maharashtrian">Maharashtrian</SelectItem>
+                          <SelectItem value="rajasthani">Rajasthani</SelectItem>
+                          <SelectItem value="hyderabadi">Hyderabadi</SelectItem>
+                          <SelectItem value="chinese">Chinese</SelectItem>
+                          <SelectItem value="italian">Italian</SelectItem>
+                          <SelectItem value="continental">Continental</SelectItem>
+                          <SelectItem value="multi-cuisine">Multi-Cuisine</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -255,10 +389,14 @@ const VendorRegistration = () => {
                     name="gstNumber"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>GST Number (Optional)</FormLabel>
+                        <FormLabel>GST Number</FormLabel>
                         <FormControl>
-                          <Input placeholder="GST registration number" {...field} />
+                          <div className="relative">
+                            <IndianRupee className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                            <Input placeholder="15-digit GST number" className="pl-10" maxLength={15} {...field} />
+                          </div>
                         </FormControl>
+                        <FormDescription>Format: 22AAAAA0000A1Z5</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -295,10 +433,33 @@ const VendorRegistration = () => {
                     <span className="ml-3 text-sm text-gray-500">Recommended size: 400x400px</span>
                   </div>
                 </div>
+
+                <FormField
+                  control={form.control}
+                  name="registrationFee"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                      <FormControl>
+                        <input
+                          type="checkbox"
+                          checked={field.value}
+                          onChange={field.onChange}
+                          className="h-4 w-4 mt-1"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Registration Fee</FormLabel>
+                        <FormDescription>
+                          I agree to pay the one-time vendor registration fee of ₹1,000
+                        </FormDescription>
+                      </div>
+                    </FormItem>
+                  )}
+                />
               </div>
               
-              <Button type="submit" className="w-full">
-                Submit Registration
+              <Button type="submit" className="w-full" disabled={paymentProcessing}>
+                {paymentProcessing ? "Processing..." : "Pay ₹1,000 & Register"}
               </Button>
               
               <p className="text-center text-sm text-gray-500 mt-2">
