@@ -24,11 +24,11 @@ const Footer = () => {
             <div className="flex flex-col space-y-2">
               <div className="flex items-start space-x-3">
                 <MapPin size={16} className="text-catering-orange mt-0.5" />
-                <span className="text-sm text-gray-600">123 Catering Street, Foodville, FA 12345</span>
+                <span className="text-sm text-gray-600">GLCE 12345</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone size={16} className="text-catering-orange" />
-                <span className="text-sm text-gray-600">+1 (555) 123-4567</span>
+                <span className="text-sm text-gray-600">+91 9876543210</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail size={16} className="text-catering-orange" />
@@ -137,7 +137,7 @@ const Footer = () => {
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-gray-500">
-              &copy; {new Date().getFullYear()} CateringBook. All rights reserved.
+              &copy; {new Date().getFullYear()} E-CateringBook. All rights reserved.
             </p>
             <div className="flex space-x-4 mt-4 md:mt-0">
               <a href="#" className="text-gray-500 hover:text-catering-orange">

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
@@ -23,106 +22,27 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+// Empty revenue data
 const revenueData = [
-  { name: 'Jan', revenue: 2400 },
-  { name: 'Feb', revenue: 1398 },
-  { name: 'Mar', revenue: 9800 },
-  { name: 'Apr', revenue: 3908 },
-  { name: 'May', revenue: 4800 },
-  { name: 'Jun', revenue: 3800 },
-  { name: 'Jul', revenue: 5000 },
-  { name: 'Aug', revenue: 7800 },
-  { name: 'Sep', revenue: 6500 },
-  { name: 'Oct', revenue: 4900 },
-  { name: 'Nov', revenue: 7300 },
-  { name: 'Dec', revenue: 11100 },
+  { name: 'Jan', revenue: 0 },
+  { name: 'Feb', revenue: 0 },
+  { name: 'Mar', revenue: 0 },
+  { name: 'Apr', revenue: 0 },
+  { name: 'May', revenue: 0 },
+  { name: 'Jun', revenue: 0 },
+  { name: 'Jul', revenue: 0 },
+  { name: 'Aug', revenue: 0 },
+  { name: 'Sep', revenue: 0 },
+  { name: 'Oct', revenue: 0 },
+  { name: 'Nov', revenue: 0 },
+  { name: 'Dec', revenue: 0 },
 ];
 
-const recentBookings = [
-  {
-    id: 1,
-    customer: "Emily Johnson",
-    event: "Wedding",
-    date: "2023-10-15",
-    guests: 100,
-    location: "Grand Plaza Hotel",
-    status: "Confirmed",
-    total: 6500,
-  },
-  {
-    id: 2,
-    customer: "Michael Chen",
-    event: "Corporate Lunch",
-    date: "2023-10-10",
-    guests: 45,
-    location: "Tech Offices",
-    status: "Pending",
-    total: 2250,
-  },
-  {
-    id: 3,
-    customer: "Sarah Williams",
-    event: "Birthday Party",
-    date: "2023-10-25",
-    guests: 30,
-    location: "Private Residence",
-    status: "Confirmed",
-    total: 1800,
-  },
-  {
-    id: 4,
-    customer: "David Miller",
-    event: "Graduation",
-    date: "2023-11-05",
-    guests: 50,
-    location: "University Hall",
-    status: "Pending",
-    total: 3000,
-  },
-  {
-    id: 5,
-    customer: "Jessica Lee",
-    event: "Anniversary",
-    date: "2023-11-12",
-    guests: 20,
-    location: "Seaside Restaurant",
-    status: "Confirmed",
-    total: 1500,
-  }
-];
+// Empty bookings data
+const recentBookings = [];
 
-const popularItems = [
-  {
-    name: "Beef Tenderloin",
-    orders: 187,
-    revenue: 6545,
-    growth: 12.5,
-  },
-  {
-    name: "Vegetable Risotto",
-    orders: 164,
-    revenue: 3116,
-    growth: 8.3,
-  },
-  {
-    name: "Chocolate Mousse",
-    orders: 142,
-    revenue: 1419,
-    growth: 5.7,
-  },
-  {
-    name: "Signature Cocktails",
-    orders: 138,
-    revenue: 1793,
-    growth: 14.2,
-  },
-  {
-    name: "Shrimp Cocktail",
-    orders: 125,
-    revenue: 1623,
-    growth: -2.1,
-  }
-];
+// Empty popular items data
+const popularItems = [];
 
 // Format date string
 const formatDate = (dateString: string) => {
@@ -134,30 +54,14 @@ const VendorDashboard = () => {
   const { user } = useUser();
   const [selectedPeriod, setSelectedPeriod] = useState("monthly");
 
-  // Get vendor stats based on selected period
+  // Get vendor stats based on selected period - initialized to zero
   const getStats = () => {
-    if (selectedPeriod === "weekly") {
-      return {
-        revenue: 5800,
-        bookings: 8,
-        avgOrderValue: 725,
-        growthRate: 8.2
-      };
-    } else if (selectedPeriod === "monthly") {
-      return {
-        revenue: 23500,
-        bookings: 32,
-        avgOrderValue: 734,
-        growthRate: 12.5
-      };
-    } else {
-      return {
-        revenue: 267000,
-        bookings: 384,
-        avgOrderValue: 695,
-        growthRate: 24.8
-      };
-    }
+    return {
+      revenue: 0,
+      bookings: 0,
+      avgOrderValue: 0,
+      growthRate: 0
+    };
   };
 
   const stats = getStats();
@@ -207,7 +111,7 @@ const VendorDashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${stats.revenue.toLocaleString()}</div>
+            <div className="text-2xl font-bold">₹{stats.revenue.toLocaleString()}</div>
             <div className="flex items-center mt-1">
               <TrendingUp className="h-4 w-4 mr-1 text-green-500" />
               <span className="text-xs text-green-500 font-medium">+{stats.growthRate}%</span>
@@ -226,7 +130,7 @@ const VendorDashboard = () => {
             <div className="text-2xl font-bold">{stats.bookings}</div>
             <div className="flex items-center mt-1">
               <TrendingUp className="h-4 w-4 mr-1 text-green-500" />
-              <span className="text-xs text-green-500 font-medium">+5.3%</span>
+              <span className="text-xs text-green-500 font-medium">+0%</span>
               <span className="text-xs text-muted-foreground ml-1">from last period</span>
             </div>
           </CardContent>
@@ -239,10 +143,10 @@ const VendorDashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${stats.avgOrderValue.toLocaleString()}</div>
+            <div className="text-2xl font-bold">₹{stats.avgOrderValue.toLocaleString()}</div>
             <div className="flex items-center mt-1">
               <TrendingUp className="h-4 w-4 mr-1 text-green-500" />
-              <span className="text-xs text-green-500 font-medium">+2.7%</span>
+              <span className="text-xs text-green-500 font-medium">+0%</span>
               <span className="text-xs text-muted-foreground ml-1">from last period</span>
             </div>
           </CardContent>
@@ -256,22 +160,18 @@ const VendorDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="flex items-center">
-              <div className="text-2xl font-bold mr-2">4.8</div>
+              <div className="text-2xl font-bold mr-2">0.0</div>
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`h-4 w-4 ${
-                      i < 4 || (i === 4 && 0.8 >= 0.5)
-                        ? "text-yellow-400 fill-yellow-400"
-                        : "text-gray-300"
-                    }`}
+                    className="h-4 w-4 text-gray-300"
                   />
                 ))}
               </div>
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              From 248 reviews
+              From 0 reviews
             </p>
           </CardContent>
         </Card>
@@ -301,7 +201,7 @@ const VendorDashboard = () => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip 
-                  formatter={(value) => [`$${value}`, 'Revenue']}
+                  formatter={(value) => [`₹${value}`, 'Revenue']}
                 />
                 <Line
                   type="monotone"
@@ -328,33 +228,40 @@ const VendorDashboard = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="space-y-6">
-                {recentBookings.slice(0, 4).map((booking) => (
-                  <div key={booking.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b border-gray-100">
-                    <div>
-                      <div className="font-medium">{booking.customer}</div>
-                      <div className="text-sm text-gray-500">{booking.event}</div>
-                      <div className="flex items-center mt-1 text-xs text-gray-400">
-                        <Calendar className="h-3 w-3 mr-1" />
-                        <span>{formatDate(booking.date)}</span>
-                        <span className="mx-1">•</span>
-                        <Users className="h-3 w-3 mr-1" />
-                        <span>{booking.guests} guests</span>
+              {recentBookings.length === 0 ? (
+                <div className="text-center py-10 text-gray-500">
+                  <p>No bookings found</p>
+                  <p className="text-sm mt-1">Your recent bookings will appear here</p>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {recentBookings.map((booking: any) => (
+                    <div key={booking.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b border-gray-100">
+                      <div>
+                        <div className="font-medium">{booking.customer}</div>
+                        <div className="text-sm text-gray-500">{booking.event}</div>
+                        <div className="flex items-center mt-1 text-xs text-gray-400">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          <span>{formatDate(booking.date)}</span>
+                          <span className="mx-1">•</span>
+                          <Users className="h-3 w-3 mr-1" />
+                          <span>{booking.guests} guests</span>
+                        </div>
+                      </div>
+                      <div className="mt-2 sm:mt-0 sm:text-right">
+                        <div className={`px-2 py-1 rounded-full text-xs font-medium inline-block ${
+                          booking.status === 'Confirmed' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {booking.status}
+                        </div>
+                        <div className="font-bold mt-1">₹{booking.total}</div>
                       </div>
                     </div>
-                    <div className="mt-2 sm:mt-0 sm:text-right">
-                      <div className={`px-2 py-1 rounded-full text-xs font-medium inline-block ${
-                        booking.status === 'Confirmed' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {booking.status}
-                      </div>
-                      <div className="font-bold mt-1">${booking.total}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -368,30 +275,37 @@ const VendorDashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-5">
-                {popularItems.map((item, idx) => (
-                  <div key={idx}>
-                    <div className="flex justify-between mb-1">
-                      <span className="font-medium">{item.name}</span>
-                      <span className="font-medium text-catering-orange">${item.revenue}</span>
-                    </div>
-                    <div className="flex justify-between text-xs text-gray-500 mb-1.5">
-                      <span>{item.orders} orders</span>
-                      <div className={`flex items-center ${
-                        item.growth >= 0 ? 'text-green-600' : 'text-red-600'
-                      }`}>
-                        <span>
-                          {item.growth >= 0 ? '+' : ''}{item.growth}%
-                        </span>
+              {popularItems.length === 0 ? (
+                <div className="text-center py-10 text-gray-500">
+                  <p>No menu items data available</p>
+                  <p className="text-sm mt-1">Your popular items will appear here</p>
+                </div>
+              ) : (
+                <div className="space-y-5">
+                  {popularItems.map((item: any, idx) => (
+                    <div key={idx}>
+                      <div className="flex justify-between mb-1">
+                        <span className="font-medium">{item.name}</span>
+                        <span className="font-medium text-catering-orange">₹{item.revenue}</span>
                       </div>
+                      <div className="flex justify-between text-xs text-gray-500 mb-1.5">
+                        <span>{item.orders} orders</span>
+                        <div className={`flex items-center ${
+                          item.growth >= 0 ? 'text-green-600' : 'text-red-600'
+                        }`}>
+                          <span>
+                            {item.growth >= 0 ? '+' : ''}{item.growth}%
+                          </span>
+                        </div>
+                      </div>
+                      <Progress 
+                        value={Math.min(100, (item.orders / popularItems[0].orders) * 100)} 
+                        className="h-1.5" 
+                      />
                     </div>
-                    <Progress 
-                      value={Math.min(100, (item.orders / popularItems[0].orders) * 100)} 
-                      className="h-1.5" 
-                    />
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

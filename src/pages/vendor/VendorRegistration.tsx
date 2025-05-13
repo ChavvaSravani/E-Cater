@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -21,7 +20,7 @@ const INDIAN_STATES = [
   "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", 
   "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", 
   "Uttarakhand", "West Bengal", "Delhi", "Jammu and Kashmir", "Ladakh", "Puducherry", 
-  "Chandigarh", "Andaman and Nicobar Islands", "Dadra and Nagar Haveli and Daman and Diu", 
+  "Chandigarh", "Andaman and Nicobar Islands","Goa", "Dadra and Nagar Haveli and Daman and Diu", 
   "Lakshadweep"
 ];
 
@@ -79,7 +78,7 @@ const VendorRegistration = () => {
       businessName: "",
       ownerName: "",
       email: "",
-      phone: "+91 70326 50276",
+      phone: "",
       address: "",
       city: "",
       state: "",
@@ -102,8 +101,8 @@ const VendorRegistration = () => {
     script.onload = () => {
       // Create Razorpay options
       const options = {
-        key: 'rzp_test_yVx1JWkWEc3urX', // Test key
-        amount: 100000, // Amount in paise (₹1000)
+        key: 'rzp_test_yVxyfuifAGHD', // Test key
+        amount: null, // Amount in paise (₹1000)
         currency: 'INR',
         name: 'CateringBook',
         description: 'Vendor Registration Fee',
@@ -112,7 +111,7 @@ const VendorRegistration = () => {
           // Payment success
           console.log("Payment success:", response);
           
-          // In a real app, you'd verify this payment on the server
+
           toast({
             title: "Payment Successful",
             description: `Payment ID: ${response.razorpay_payment_id}`,
@@ -128,8 +127,8 @@ const VendorRegistration = () => {
           });
           
           setTimeout(() => {
-            navigate("/vendor/dashboard");
-          }, 2000);
+            navigate("/");
+          }, 3000);
         },
         prefill: {
           name: form.getValues().ownerName,
@@ -356,6 +355,7 @@ const VendorRegistration = () => {
                           <SelectItem value="hyderabadi">Hyderabadi</SelectItem>
                           <SelectItem value="chinese">Chinese</SelectItem>
                           <SelectItem value="italian">Italian</SelectItem>
+                          <SelectItem value="mexican">Vas koda gama</SelectItem>
                           <SelectItem value="continental">Continental</SelectItem>
                           <SelectItem value="multi-cuisine">Multi-Cuisine</SelectItem>
                         </SelectContent>
