@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { 
@@ -44,8 +43,8 @@ const vendors = [
     rating: 4.8,
     deliveryTime: "3-5 days",
     minOrder: 20,
-    price: "$$",
-    location: "New York",
+    price: "₹₹",
+    location: "Mumbai",
     distance: 3.2,
     description: "Premium catering services for weddings, corporate events, and special occasions.",
     tags: ["Wedding", "Corporate", "Buffet", "Fine Dining"],
@@ -59,8 +58,8 @@ const vendors = [
     rating: 4.7,
     deliveryTime: "2-4 days",
     minOrder: 15,
-    price: "$$",
-    location: "Boston",
+    price: "₹₹",
+    location: "Delhi",
     distance: 5.1,
     description: "Sustainable plant-based catering with organic ingredients and eco-friendly practices.",
     tags: ["Vegetarian", "Vegan", "Organic", "Health"],
@@ -74,8 +73,8 @@ const vendors = [
     rating: 4.9,
     deliveryTime: "3-6 days",
     minOrder: 25,
-    price: "$$$",
-    location: "Chicago",
+    price: "₹₹₹",
+    location: "Bangalore",
     distance: 2.8,
     description: "Authentic Indian and Asian cuisine with a modern twist. Spice levels customizable.",
     tags: ["Indian", "Asian", "Spicy", "Fusion"],
@@ -89,8 +88,8 @@ const vendors = [
     rating: 4.6,
     deliveryTime: "4-7 days",
     minOrder: 30,
-    price: "$$$",
-    location: "Miami",
+    price: "₹₹₹",
+    location: "Chennai",
     distance: 4.3,
     description: "Luxury catering for high-end events, celebrity weddings, and exclusive parties.",
     tags: ["Luxury", "Mediterranean", "Continental", "Fine Dining"],
@@ -104,8 +103,8 @@ const vendors = [
     rating: 4.5,
     deliveryTime: "2-3 days",
     minOrder: 10,
-    price: "$$",
-    location: "Los Angeles",
+    price: "₹₹",
+    location: "Kolkata",
     distance: 1.9,
     description: "Modern American cuisine with international influences. Perfect for casual events.",
     tags: ["American", "Fusion", "Casual", "Trendy"],
@@ -119,8 +118,8 @@ const vendors = [
     rating: 4.9,
     deliveryTime: "1-2 days",
     minOrder: 15,
-    price: "$$",
-    location: "San Francisco",
+    price: "₹₹",
+    location: "Hyderabad",
     distance: 3.5,
     description: "Specialized dessert catering for events. Custom cakes, pastries, and sweet treats.",
     tags: ["Desserts", "Pastries", "Cakes", "Sweet"],
@@ -134,8 +133,8 @@ const vendors = [
     rating: 4.7,
     deliveryTime: "2-4 days",
     minOrder: 20,
-    price: "$$$",
-    location: "Seattle",
+    price: "₹₹₹",
+    location: "Pune",
     distance: 6.2,
     description: "Fresh seafood catering with Mediterranean influence. Sustainable fishing practices.",
     tags: ["Seafood", "Mediterranean", "Sustainable", "Fresh"],
@@ -149,8 +148,8 @@ const vendors = [
     rating: 4.6,
     deliveryTime: "2-3 days",
     minOrder: 15,
-    price: "$$",
-    location: "Dallas",
+    price: "₹₹",
+    location: "Jaipur",
     distance: 4.8,
     description: "Authentic Mexican catering with options from street food to gourmet cuisine.",
     tags: ["Mexican", "Latin", "Spicy", "Festive"],
@@ -314,10 +313,10 @@ const VendorPage = () => {
           className="mb-6"
         />
         <div className="flex justify-between text-sm">
-          <span>$</span>
-          <span>$$</span>
-          <span>$$$</span>
-          <span>$$$$</span>
+          <span>₹</span>
+          <span>₹₹</span>
+          <span>₹₹₹</span>
+          <span>₹₹₹₹</span>
         </div>
       </div>
       
@@ -359,11 +358,18 @@ const VendorPage = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Find Catering Vendors</h1>
-        <p className="text-gray-600 mt-1">
-          {filteredVendors.length} vendors available for your event
-        </p>
+      <div className="mb-8 flex justify-between items-start">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Find Catering Vendors</h1>
+          <p className="text-gray-600 mt-1">
+            {filteredVendors.length} vendors available for your event
+          </p>
+        </div>
+        <Link to="/vendor/register" className="hidden md:block">
+          <Button className="bg-catering-orange hover:bg-catering-orange/90 text-white">
+            Become a Vendor
+          </Button>
+        </Link>
       </div>
       
       {/* Search and Filter Bar */}
@@ -473,7 +479,7 @@ const VendorPage = () => {
                     
                     <div className="flex items-center mt-3 text-xs text-gray-500">
                       <MapPin className="h-3 w-3 mr-1" />
-                      <span>{vendor.location} ({vendor.distance.toFixed(1)} miles)</span>
+                      <span>{vendor.location} ({vendor.distance.toFixed(1)} km)</span>
                     </div>
                     
                     <div className="flex items-center mt-1 text-xs text-gray-500">
@@ -502,6 +508,17 @@ const VendorPage = () => {
             </div>
           )}
         </div>
+      </div>
+      
+      <div className="mt-8 md:hidden text-center">
+        <Link to="/vendor/register">
+          <Button className="bg-catering-orange hover:bg-catering-orange/90 text-white">
+            Become a Vendor
+          </Button>
+        </Link>
+        <p className="mt-4 text-gray-600">
+          Contact us: <a href="tel:+917032650276" className="font-medium">+91 70326 50276</a>
+        </p>
       </div>
     </div>
   );

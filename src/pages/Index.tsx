@@ -31,7 +31,7 @@ const featuredVendors = [
     rating: 4.8,
     deliveryTime: "3-5 days",
     minOrder: 20,
-    price: "$$",
+    price: "₹₹",
   },
   {
     id: 2,
@@ -41,7 +41,7 @@ const featuredVendors = [
     rating: 4.7,
     deliveryTime: "2-4 days",
     minOrder: 15,
-    price: "$$",
+    price: "₹₹",
   },
   {
     id: 3,
@@ -51,7 +51,7 @@ const featuredVendors = [
     rating: 4.9,
     deliveryTime: "3-6 days",
     minOrder: 25,
-    price: "$$$",
+    price: "₹₹₹",
   },
   {
     id: 4,
@@ -61,7 +61,7 @@ const featuredVendors = [
     rating: 4.6,
     deliveryTime: "4-7 days",
     minOrder: 30,
-    price: "$$$",
+    price: "₹₹₹",
   },
 ];
 
@@ -124,34 +124,6 @@ const howItWorksSteps = [
     title: "Enjoy Your Event",
     description: "Relax while professionals take care of your catering needs.",
     icon: Users,
-  },
-];
-
-// Sample testimonials
-const testimonials = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    role: "Event Planner",
-    comment: "CateringBook made organizing our corporate event so much easier. The vendors were professional and the food was outstanding!",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    role: "Wedding Coordinator",
-    comment: "I've used CateringBook for multiple weddings and the service is always impeccable. Highly recommend for any special occasion.",
-    avatar: "https://randomuser.me/api/portraits/men/22.jpg",
-    rating: 5,
-  },
-  {
-    id: 3,
-    name: "Emily Rodriguez",
-    role: "Birthday Party Host",
-    comment: "Found an amazing caterer for my daughter's birthday. The booking process was smooth and the food was a hit with all the guests!",
-    avatar: "https://randomuser.me/api/portraits/women/63.jpg",
-    rating: 4,
   },
 ];
 
@@ -339,57 +311,6 @@ const HomePage = () => {
         </div>
       </section>
       
-      {/* Testimonials Section */}
-      <section className="py-12 md:py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">What Our Customers Say</h2>
-            <p className="text-gray-600 mt-2">Read reviews from people who've used our catering services</p>
-          </div>
-          
-          <Carousel className="w-full max-w-4xl mx-auto">
-            <CarouselContent>
-              {testimonials.map((testimonial) => (
-                <CarouselItem key={testimonial.id} className="md:basis-1/2">
-                  <Card className="border-none shadow-md h-full flex flex-col">
-                    <CardHeader>
-                      <div className="flex items-center space-x-3">
-                        <div className="h-12 w-12 rounded-full overflow-hidden">
-                          <img 
-                            src={testimonial.avatar} 
-                            alt={testimonial.name}
-                            className="h-full w-full object-cover" 
-                          />
-                        </div>
-                        <div>
-                          <CardTitle className="text-base">{testimonial.name}</CardTitle>
-                          <CardDescription>{testimonial.role}</CardDescription>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="flex-grow">
-                      <div className="flex mb-3">
-                        {Array(5).fill(0).map((_, i) => (
-                          <Star 
-                            key={i} 
-                            className={`h-4 w-4 ${i < testimonial.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`} 
-                          />
-                        ))}
-                      </div>
-                      <p className="text-gray-600">"{testimonial.comment}"</p>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="hidden md:block">
-              <CarouselPrevious />
-              <CarouselNext />
-            </div>
-          </Carousel>
-        </div>
-      </section>
-      
       {/* CTA Section */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-catering-orange to-catering-yellow text-white">
         <div className="container mx-auto px-4">
@@ -506,11 +427,14 @@ const HomePage = () => {
             <p className="text-gray-600 mb-8">
               Join our platform to reach more customers, manage bookings efficiently, and grow your business.
             </p>
-            <Link to="/vendor/join">
+            <Link to="/vendor/register">
               <Button className="bg-catering-orange hover:bg-catering-orange/90 text-white px-8">
                 Become a Vendor
               </Button>
             </Link>
+            <p className="mt-4 text-gray-600">
+              Contact us: <a href="tel:+917032650276" className="font-medium">+91 70326 50276</a>
+            </p>
           </div>
         </div>
       </section>

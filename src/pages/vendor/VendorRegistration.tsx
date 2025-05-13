@@ -102,8 +102,8 @@ const VendorRegistration = () => {
     script.onload = () => {
       // Create Razorpay options
       const options = {
-        key: 'rzp_test_yVx1JWkWEc3urX', // Replace with your test key
-        amount: 100000, // Amount is in currency subunits (100000 = ₹1000)
+        key: 'rzp_test_yVx1JWkWEc3urX', // Test key
+        amount: 100000, // Amount in paise (₹1000)
         currency: 'INR',
         name: 'CateringBook',
         description: 'Vendor Registration Fee',
