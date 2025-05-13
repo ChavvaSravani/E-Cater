@@ -21,6 +21,8 @@ import VendorOrders from "./pages/vendor/VendorOrders";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminVendors from "./pages/admin/AdminVendors";
+import VendorRegistration from "./pages/vendor/VendorRegistration";
+import FoodItemUpload from "./pages/vendor/FoodItemUpload";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +50,7 @@ const App = () => (
             <Route index element={<HomePage />} />
             <Route path="vendors" element={<VendorPage />} />
             <Route path="vendors/:id" element={<VendorDetails />} />
+            <Route path="vendor/register" element={<VendorRegistration />} />
             
             {/* Protected Routes */}
             <Route
@@ -105,6 +108,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <VendorOrders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="vendor/food/upload"
+              element={
+                <ProtectedRoute>
+                  <FoodItemUpload />
                 </ProtectedRoute>
               }
             />

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
@@ -58,7 +59,7 @@ const vendorDetails = {
   reviewCount: 247,
   deliveryTime: "3-5 days",
   minOrder: 20,
-  price: "$$",
+  price: "₹₹",
   location: "New York",
   address: "123 Catering Avenue, New York, NY 10001",
   distance: 3.2,
@@ -79,7 +80,7 @@ const vendorDetails = {
           id: "a1",
           name: "Bruschetta",
           description: "Toasted bread topped with fresh tomatoes, basil, and mozzarella",
-          price: 6.99,
+          price: 299,
           image: "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: ["Vegetarian"],
         },
@@ -87,7 +88,7 @@ const vendorDetails = {
           id: "a2",
           name: "Stuffed Mushrooms",
           description: "Mushrooms filled with spinach and cream cheese",
-          price: 8.99,
+          price: 399,
           image: "https://images.unsplash.com/photo-1627308595281-e1be5fbae00e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: ["Vegetarian", "Gluten-Free"],
         },
@@ -95,7 +96,7 @@ const vendorDetails = {
           id: "a3",
           name: "Shrimp Cocktail",
           description: "Chilled shrimp served with cocktail sauce",
-          price: 12.99,
+          price: 599,
           image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: ["Gluten-Free", "Pescatarian"],
         },
@@ -109,7 +110,7 @@ const vendorDetails = {
           id: "m1",
           name: "Grilled Salmon",
           description: "Atlantic salmon with lemon butter sauce and seasonal vegetables",
-          price: 24.99,
+          price: 1199,
           image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: ["Gluten-Free", "Pescatarian"],
         },
@@ -117,7 +118,7 @@ const vendorDetails = {
           id: "m2",
           name: "Beef Tenderloin",
           description: "Slow-roasted beef tenderloin with red wine reduction",
-          price: 34.99,
+          price: 1599,
           image: "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: [],
         },
@@ -125,7 +126,7 @@ const vendorDetails = {
           id: "m3",
           name: "Vegetable Risotto",
           description: "Creamy arborio rice with seasonal vegetables and parmesan",
-          price: 18.99,
+          price: 899,
           image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: ["Vegetarian"],
         },
@@ -139,7 +140,7 @@ const vendorDetails = {
           id: "d1",
           name: "Chocolate Mousse",
           description: "Rich and creamy chocolate mousse topped with whipped cream",
-          price: 9.99,
+          price: 449,
           image: "https://images.unsplash.com/photo-1570145820259-b5b80c5c8bd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: ["Vegetarian"],
         },
@@ -147,7 +148,7 @@ const vendorDetails = {
           id: "d2",
           name: "Fruit Tart",
           description: "Fresh seasonal fruits on a sweet pastry crust",
-          price: 8.99,
+          price: 399,
           image: "https://images.unsplash.com/photo-1519915028121-7d3463d5b1ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: ["Vegetarian"],
         },
@@ -155,7 +156,7 @@ const vendorDetails = {
           id: "d3",
           name: "Tiramisu",
           description: "Classic Italian dessert with layers of coffee-soaked ladyfingers",
-          price: 10.99,
+          price: 499,
           image: "https://images.unsplash.com/photo-1571877190293-702708f7bab4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: ["Vegetarian"],
         },
@@ -169,7 +170,7 @@ const vendorDetails = {
           id: "dr1",
           name: "Signature Cocktails",
           description: "Custom cocktails tailored to your event theme",
-          price: 12.99,
+          price: 599,
           image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: [],
         },
@@ -177,7 +178,7 @@ const vendorDetails = {
           id: "dr2",
           name: "Wine Selection",
           description: "Curated selection of red and white wines",
-          price: 29.99,
+          price: 1499,
           image: "https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: ["Vegan"],
         },
@@ -185,7 +186,7 @@ const vendorDetails = {
           id: "dr3",
           name: "Mocktail Bar",
           description: "Non-alcoholic craft beverages with fresh ingredients",
-          price: 8.99,
+          price: 399,
           image: "https://images.unsplash.com/photo-1560508179-b2c9a3f8e92b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
           dietary: ["Vegan", "Non-Alcoholic"],
         },
@@ -197,7 +198,7 @@ const vendorDetails = {
       id: "p1",
       name: "Essential Package",
       description: "Basic catering service with main course options and standard service",
-      pricePerPerson: 39.99,
+      pricePerPerson: 1999,
       minGuests: 20,
       includes: [
         "Choice of 1 main course",
@@ -211,7 +212,7 @@ const vendorDetails = {
       id: "p2",
       name: "Premium Package",
       description: "Enhanced catering service with appetizers, main courses, and premium service options",
-      pricePerPerson: 59.99,
+      pricePerPerson: 2999,
       minGuests: 30,
       includes: [
         "2 appetizer options",
@@ -227,7 +228,7 @@ const vendorDetails = {
       id: "p3",
       name: "Luxury Package",
       description: "All-inclusive luxury catering experience with full menu options and white-glove service",
-      pricePerPerson: 89.99,
+      pricePerPerson: 3999,
       minGuests: 40,
       includes: [
         "3 appetizer options",
@@ -240,32 +241,6 @@ const vendorDetails = {
         "Fine china, crystal glassware, and silver utensils",
         "Chef's custom menu consultation",
       ],
-    },
-  ],
-  reviews: [
-    {
-      id: 1,
-      name: "Emily Johnson",
-      rating: 5,
-      date: "2023-05-15",
-      comment: "Royal Catering handled our wedding and the service was impeccable! Every guest complimented the food and presentation.",
-      eventType: "Wedding",
-    },
-    {
-      id: 2,
-      name: "Michael Chen",
-      rating: 4,
-      date: "2023-04-22",
-      comment: "Great corporate event catering. Professional staff and delicious food. The only improvement would be more vegetarian options.",
-      eventType: "Corporate Event",
-    },
-    {
-      id: 3,
-      name: "Sarah Williams",
-      rating: 5,
-      date: "2023-03-10",
-      comment: "Used Royal for my daughter's sweet 16. They were amazing with the custom menu and worked within our budget. Highly recommend!",
-      eventType: "Birthday Party",
     },
   ],
   faqs: [
@@ -304,6 +279,7 @@ const VendorDetails = () => {
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>("");
+  const [showPayment, setShowPayment] = useState(false);
 
   // Handle item selection
   const handleItemSelect = (item: any, increment: boolean) => {
@@ -351,8 +327,8 @@ const VendorDetails = () => {
     );
   };
 
-  // Handle booking
-  const handleBooking = () => {
+  // Initialize Razorpay
+  const initializeRazorpay = () => {
     if (!selectedDate) {
       toast({
         title: "Please select a date",
@@ -380,26 +356,47 @@ const VendorDetails = () => {
       return;
     }
     
-    const bookingDetails = {
-      vendorId: id,
-      vendorName: vendorDetails.name,
-      date: selectedDate,
-      time: selectedTime,
-      guestCount,
-      items: selectedItems,
-      selectedPackage: selectedPackage 
-        ? vendorDetails.packages.find(p => p.id === selectedPackage) 
-        : null,
-      totalPrice: calculateTotal(),
+    // In a real app, you'd make an API call to create a Razorpay order
+    const options = {
+      key: "rzp_test_YourTestKey", // Enter your test key here
+      amount: calculateTotal() * 100, // Amount in paisa
+      currency: "INR",
+      name: "Catering Service",
+      description: `Booking for ${vendorDetails.name}`,
+      image: "https://example.com/your_logo.png",
+      handler: function(response: any) {
+        // Handle success
+        console.log("Payment ID: " + response.razorpay_payment_id);
+        toast({
+          title: "Payment Successful!",
+          description: "Your booking has been confirmed.",
+        });
+        
+        // In a real app, you'd make an API call to your backend to verify payment
+        // and create the booking record
+      },
+      prefill: {
+        name: "Customer Name",
+        email: "customer@example.com",
+        contact: "9999999999"
+      },
+      notes: {
+        address: "Customer Address"
+      },
+      theme: {
+        color: "#F37254"
+      }
     };
     
-    toast({
-      title: "Booking Created!",
-      description: "Your booking request has been submitted successfully.",
-    });
-    
-    console.log("Booking details:", bookingDetails);
-    // In a real app, you would send this to your backend
+    // Create and open Razorpay checkout
+    const rzp = new (window as any).Razorpay(options);
+    rzp.open();
+  };
+
+  // Handle booking
+  const handleBooking = () => {
+    // For demo purposes, let's show a message about Razorpay integration
+    setShowPayment(true);
   };
 
   // Selected items count
@@ -505,10 +502,9 @@ const VendorDetails = () => {
       
       {/* Main Content with Tabs */}
       <Tabs defaultValue="menu" className="mt-10" value={selectedTab} onValueChange={setSelectedTab}>
-        <TabsList className="grid grid-cols-4 mb-8">
+        <TabsList className="grid grid-cols-3 mb-8">
           <TabsTrigger value="menu">Menu</TabsTrigger>
           <TabsTrigger value="packages">Packages</TabsTrigger>
-          <TabsTrigger value="reviews">Reviews</TabsTrigger>
           <TabsTrigger value="faq">FAQ</TabsTrigger>
         </TabsList>
         
@@ -530,7 +526,7 @@ const VendorDetails = () => {
                     <div className="p-4">
                       <div className="flex justify-between">
                         <h3 className="font-bold text-gray-900">{item.name}</h3>
-                        <p className="font-semibold text-catering-orange">${item.price.toFixed(2)}</p>
+                        <p className="font-semibold text-catering-orange">₹{item.price}</p>
                       </div>
                       <p className="text-sm text-gray-600 mt-1 mb-3">{item.description}</p>
                       
@@ -605,7 +601,7 @@ const VendorDetails = () => {
                   <h3 className="text-xl font-bold text-gray-900">{pkg.name}</h3>
                   <div className="mt-2 mb-4">
                     <span className="text-2xl font-bold text-catering-orange">
-                      ${pkg.pricePerPerson.toFixed(2)}
+                      ₹{pkg.pricePerPerson}
                     </span>
                     <span className="text-gray-600"> / person</span>
                   </div>
@@ -645,61 +641,6 @@ const VendorDetails = () => {
           </div>
         </TabsContent>
         
-        {/* Reviews Tab */}
-        <TabsContent value="reviews" className="space-y-8">
-          <div className="flex items-center mb-6">
-            <div className="flex items-center bg-catering-light-yellow px-4 py-2 rounded-md mr-4">
-              <Star className="h-8 w-8 mr-2 fill-catering-orange text-catering-orange" />
-              <div>
-                <div className="font-bold text-2xl text-catering-orange">
-                  {vendorDetails.rating}
-                </div>
-                <div className="text-xs text-gray-600">{vendorDetails.reviewCount} reviews</div>
-              </div>
-            </div>
-            
-            <div className="flex items-center">
-              <SignedIn>
-                <Button variant="outline">Write a Review</Button>
-              </SignedIn>
-              <SignedOut>
-                <SignInButton>
-                  <Button variant="outline">Sign in to Review</Button>
-                </SignInButton>
-              </SignedOut>
-            </div>
-          </div>
-          
-          <div className="space-y-6">
-            {vendorDetails.reviews.map((review) => (
-              <div key={review.id} className="border-b border-gray-200 pb-6">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-gray-900">{review.name}</h3>
-                  <span className="text-sm text-gray-500">{review.date}</span>
-                </div>
-                
-                <div className="flex items-center mb-2">
-                  {Array(5).fill(0).map((_, i) => (
-                    <Star 
-                      key={i} 
-                      className={`h-4 w-4 ${
-                        i < review.rating 
-                          ? "text-yellow-400 fill-yellow-400" 
-                          : "text-gray-300"
-                      }`} 
-                    />
-                  ))}
-                  <span className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full ml-2">
-                    {review.eventType}
-                  </span>
-                </div>
-                
-                <p className="text-gray-700">{review.comment}</p>
-              </div>
-            ))}
-          </div>
-        </TabsContent>
-        
         {/* FAQ Tab */}
         <TabsContent value="faq">
           <Accordion type="single" collapsible className="w-full">
@@ -716,6 +657,40 @@ const VendorDetails = () => {
           </Accordion>
         </TabsContent>
       </Tabs>
+      
+      {/* Razorpay Script */}
+      {showPayment && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg max-w-md w-full">
+            <h3 className="text-xl font-bold mb-4">Razorpay Test Payment</h3>
+            <p className="mb-4">
+              In a production environment, clicking "Proceed to Payment" would open the Razorpay payment gateway. For this demo, we'll simulate the payment flow.
+            </p>
+            <p className="mb-4 font-semibold">
+              Total Amount: ₹{calculateTotal()}
+            </p>
+            <div className="flex justify-end space-x-3">
+              <Button variant="outline" onClick={() => setShowPayment(false)}>
+                Cancel
+              </Button>
+              <Button 
+                className="bg-catering-orange hover:bg-catering-orange/90"
+                onClick={() => {
+                  setShowPayment(false);
+                  // Here you would typically make an API call to create a Razorpay order
+                  // and then open the Razorpay checkout
+                  toast({
+                    title: "Payment Successful!",
+                    description: "Your booking has been confirmed.",
+                  });
+                }}
+              >
+                Proceed to Payment
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Booking Section */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 shadow-lg z-30">
@@ -812,7 +787,7 @@ const VendorDetails = () => {
                     : "No items selected"}
               </div>
               <div className="font-bold text-lg">
-                ${calculateTotal().toFixed(2)}
+                ₹{calculateTotal()}
               </div>
             </div>
             
