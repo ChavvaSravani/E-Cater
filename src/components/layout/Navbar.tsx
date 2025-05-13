@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton, useAuth } from "@clerk/clerk-react";
@@ -71,6 +70,10 @@ const Navbar = () => {
           </Link>
           <Link to="/vendors" className={`text-sm font-medium ${location.pathname.includes("/vendors") ? "text-catering-orange" : "text-foreground hover:text-catering-orange"}`}>
             Vendors
+          </Link>
+          
+          <Link to="/order-tracking" className={`text-sm font-medium ${location.pathname.includes("/order-tracking") ? "text-catering-orange" : "text-foreground hover:text-catering-orange"}`}>
+            Track Order
           </Link>
           
           <SignedIn>

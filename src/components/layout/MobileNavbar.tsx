@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
@@ -15,7 +14,8 @@ import {
   FileText,
   ChefHat,
   LogIn,
-  ShoppingCart
+  ShoppingCart,
+  Truck
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -105,6 +105,19 @@ const MobileNavbar = () => {
                     >
                       <Store size={18} />
                       <span>Vendors</span>
+                    </Link>
+                    
+                    <Link
+                      to="/order-tracking"
+                      onClick={closeMenu}
+                      className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
+                        location.pathname.includes("/order-tracking") 
+                          ? "bg-catering-light-yellow text-catering-orange" 
+                          : "hover:bg-gray-100"
+                      }`}
+                    >
+                      <Truck size={18} />
+                      <span>Track Order</span>
                     </Link>
                     
                     <SignedIn>
