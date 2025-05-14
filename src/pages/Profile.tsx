@@ -1,274 +1,185 @@
+import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { 
+  ArrowLeft, 
+  User, 
+  FileText, 
+  HelpCircle, 
+  ChevronRight,
+  Smartphone,
+  LogOut,
+  ExternalLink
+} from 'lucide-react';
+import { useUser, useClerk } from '@clerk/clerk-react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useUser } from "@clerk/clerk-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
-
-const Profile = () => {
+const Settings: React.FC = () => {
+  const navigate = useNavigate();
   const { user } = useUser();
+  const { signOut } = useClerk();
   const { toast } = useToast();
-  
-  const [formData, setFormData] = useState({
-    firstName: user?.firstName || "",
-    lastName: user?.lastName || "",
-    email: user?.primaryEmailAddress?.emailAddress || "",
-    phone: user?.phoneNumbers?.[0]?.phoneNumber || "",
-    address: "123 Main St",
-    city: "New York",
-    zipCode: "10001",
-    state: "NY",
-    country: "USA"
-  });
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+  const settingsSections = [
+    {
+      title: 'Legal',
+      items: [
+        { 
+          name: 'Privacy Policy', 
+          icon: FileText, 
+          link: 'https://aczen.in/privacy',
+          external: true 
+        },
+        { 
+          name: 'Terms & Conditions', 
+          icon: FileText, 
+          link: 'https://aczen.in/terms',
+          external: true 
+        },
+        { 
+          name: 'Refund Policy', 
+          icon: FileText, 
+          link: 'https://aczen.in/refund',
+          external: true 
+        }
+      ]
+    },
+    {
+      title: 'Support',
+      items: [
+        { 
+          name: 'Contact Support', 
+          icon: HelpCircle, 
+          link: 'https://tally.so/r/mRga8p',
+          external: true 
+        }
+      ]
+    }
+  ];
+
+  const handleProfilePhotoClick = () => {
+    fileInputRef.current?.click();
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-      title: "Profile Updated",
-      description: "Your profile information has been updated successfully."
-    });
-  };
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
 
-  const handlePasswordChange = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-      title: "Password Reset Email Sent",
-      description: "Check your email for instructions to reset your password."
-    });
+    try {
+      // Here you would typically upload the file to your server
+      // and update the user's profile photo
+      toast({
+        title: "Profile Photo Updated",
+        description: "Your profile photo has been updated successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update profile photo. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">My Profile</h1>
+    <div className="max-w-md mx-auto bg-black text-white min-h-screen">
+      {/* Header */}
+      <div className="p-4 flex items-center border-b border-gray-800">
+        <button 
+          onClick={() => navigate(-1)} 
+          className="p-2 rounded-full hover:bg-gray-800"
+        >
+          <ArrowLeft className="w-6 h-6" />
+        </button>
+        <h1 className="text-xl font-bold ml-4">Settings</h1>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-6">
-        {/* Sidebar */}
-        <div className="space-y-6">
-          <Card>
-            <CardContent className="pt-6 flex flex-col items-center">
-              <Avatar className="w-20 h-20">
-                <AvatarImage src={user?.imageUrl} />
-                <AvatarFallback>{user?.firstName?.[0]}{user?.lastName?.[0]}</AvatarFallback>
-              </Avatar>
-              
-              <h2 className="text-xl font-semibold mt-4">
-                {user?.firstName} {user?.lastName}
-              </h2>
-              <p className="text-gray-500">{user?.primaryEmailAddress?.emailAddress}</p>
-              
-              <Button variant="outline" className="mt-4 w-full">
-                Change Photo
-              </Button>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="pt-6">
-              <div className="space-y-4">
-                <Button variant="ghost" className="w-full justify-start">
-                  Account Settings
-                </Button>
-                <Button variant="ghost" className="w-full justify-start">
-                  Notifications
-                </Button>
-                <Button variant="ghost" className="w-full justify-start">
-                  Payment Methods
-                </Button>
-                <Button variant="ghost" className="w-full justify-start">
-                  Security
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+      {/* Profile Preview */}
+      <div className="p-6 flex items-center border-b border-gray-800">
+        <div 
+          className="w-16 h-16 rounded-full overflow-hidden bg-gray-700 cursor-pointer relative group"
+          onClick={handleProfilePhotoClick}
+        >
+          {user?.imageUrl ? (
+            <img src={user.imageUrl} alt="Profile" className="w-full h-full object-cover" />
+          ) : (
+            <User className="w-full h-full p-3" />
+          )}
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="text-xs text-white">Change Photo</span>
+          </div>
         </div>
-        
-        {/* Main content */}
-        <div>
-          <Tabs defaultValue="personal">
-            <TabsList className="mb-6">
-              <TabsTrigger value="personal">Personal Info</TabsTrigger>
-              <TabsTrigger value="password">Password</TabsTrigger>
-              <TabsTrigger value="preferences">Preferences</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="personal">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Personal Information</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="firstName">First Name</Label>
-                        <Input
-                          id="firstName"
-                          name="firstName"
-                          value={formData.firstName}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="lastName">Last Name</Label>
-                        <Input
-                          id="lastName"
-                          name="lastName"
-                          value={formData.lastName}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          disabled
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="phone">Phone Number</Label>
-                        <Input
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                    </div>
-                    
-                    <Separator />
-                    
-                    <h3 className="font-semibold">Address Information</h3>
-                    
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="address">Street Address</Label>
-                        <Input
-                          id="address"
-                          name="address"
-                          value={formData.address}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="city">City</Label>
-                          <Input
-                            id="city"
-                            name="city"
-                            value={formData.city}
-                            onChange={handleInputChange}
-                          />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="state">State</Label>
-                          <Input
-                            id="state"
-                            name="state"
-                            value={formData.state}
-                            onChange={handleInputChange}
-                          />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="zipCode">Zip Code</Label>
-                          <Input
-                            id="zipCode"
-                            name="zipCode"
-                            value={formData.zipCode}
-                            onChange={handleInputChange}
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="country">Country</Label>
-                        <Input
-                          id="country"
-                          name="country"
-                          value={formData.country}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="flex justify-end">
-                      <Button type="submit" className="bg-catering-orange hover:bg-catering-orange/90">
-                        Save Changes
-                      </Button>
-                    </div>
-                  </form>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="password">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Change Password</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handlePasswordChange} className="space-y-6">
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="currentPassword">Current Password</Label>
-                        <Input id="currentPassword" type="password" />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="newPassword">New Password</Label>
-                        <Input id="newPassword" type="password" />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="confirmPassword">Confirm New Password</Label>
-                        <Input id="confirmPassword" type="password" />
-                      </div>
-                    </div>
-                    
-                    <div className="flex justify-end">
-                      <Button type="submit" className="bg-catering-orange hover:bg-catering-orange/90">
-                        Update Password
-                      </Button>
-                    </div>
-                  </form>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="preferences">
-              <Card>
-                <CardHeader>
-                  <CardTitle>User Preferences</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-500 mb-4">Coming soon...</p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+        <input
+          type="file"
+          ref={fileInputRef}
+          className="hidden"
+          accept="image/*"
+          onChange={handleFileChange}
+        />
+        <div className="ml-4">
+          <h2 className="text-lg font-semibold">{user?.fullName || 'User'}</h2>
+          <p className="text-sm text-gray-400">{user?.primaryEmailAddress?.emailAddress || 'user@example.com'}</p>
         </div>
+      </div>
+
+      {/* Settings Sections */}
+      <div className="p-4 space-y-6">
+        {settingsSections.map((section, sectionIndex) => (
+          <div key={sectionIndex} className="mb-6">
+            <h3 className="text-sm font-semibold text-gray-400 mb-2">{section.title}</h3>
+            <div className="bg-gray-900 rounded-lg overflow-hidden">
+              {section.items.map((item, itemIndex) => (
+                <a 
+                  key={itemIndex} 
+                  href={item.link}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
+                  className="w-full flex items-center p-4 hover:bg-gray-800 transition-colors border-b border-gray-800 last:border-0"
+                >
+                  <span className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800">
+                    <item.icon className="w-4 h-4" />
+                  </span>
+                  <span className="ml-3 flex-1 text-left">{item.name}</span>
+                  {item.external ? (
+                    <ExternalLink className="w-5 h-5 text-gray-500" />
+                  ) : (
+                    <ChevronRight className="w-5 h-5 text-gray-500" />
+                  )}
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* App Info */}
+      <div className="px-4 py-2 border-t border-gray-800">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-sm font-semibold">App Version</h3>
+            <p className="text-xs text-gray-400">1.0.0 (Build 42)</p>
+          </div>
+          <Smartphone className="w-5 h-5 text-gray-500" />
+        </div>
+      </div>
+
+      {/* Logout Button */}
+      <div className="p-4">
+        <Button 
+          className="w-full py-3 flex items-center justify-center bg-red-900 hover:bg-red-800 rounded-lg"
+          onClick={() => {
+            signOut().then(() => {
+              navigate('/sign-in');
+            });
+          }}
+        >
+          <LogOut className="w-5 h-5 mr-2" />
+          <span className="font-medium">Log Out</span>
+        </Button>
       </div>
     </div>
   );
 };
 
-export default Profile;
+export default Settings; 
