@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { 
-  Search, 
   Menu, 
   X, 
   Home,
@@ -19,6 +18,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { SearchCommand } from "@/components/SearchCommand";
 
 const MobileNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,10 +41,10 @@ const MobileNavbar = () => {
         </Link>
 
         {/* Mobile Actions */}
-        <div className="flex items-center space-x-3">
-          <Button variant="ghost" size="icon" className="text-foreground">
-            <Search size={20} />
-          </Button>
+        <div className="flex items-center space-x-2">
+          <div className="w-[150px]">
+            <SearchCommand />
+          </div>
           
           <SignedIn>
             <Link to="/bookings">
@@ -80,155 +80,45 @@ const MobileNavbar = () => {
                   </div>
                 </div>
                 
-                <div className="flex-1 overflow-auto py-2">
-                  <nav className="flex flex-col space-y-1 px-2">
-                    <Link
-                      to="/"
-                      onClick={closeMenu}
-                      className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
-                        location.pathname === "/" 
-                          ? "bg-catering-light-yellow text-catering-orange" 
-                          : "hover:bg-gray-100"
-                      }`}
-                    >
-                      <Home size={18} />
-                      <span>Home</span>
-                    </Link>
-                    <Link
-                      to="/vendors"
-                      onClick={closeMenu}
-                      className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
-                        location.pathname.includes("/vendors") 
-                          ? "bg-catering-light-yellow text-catering-orange" 
-                          : "hover:bg-gray-100"
-                      }`}
-                    >
-                      <Store size={18} />
-                      <span>Vendors</span>
-                    </Link>
-                    
-                    <Link
-                      to="/order-tracking"
-                      onClick={closeMenu}
-                      className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
-                        location.pathname.includes("/order-tracking") 
-                          ? "bg-catering-light-yellow text-catering-orange" 
-                          : "hover:bg-gray-100"
-                      }`}
-                    >
-                      <Truck size={18} />
-                      <span>Track Order</span>
-                    </Link>
-                    
-                    <SignedIn>
-                      <Link
-                        to="/bookings"
-                        onClick={closeMenu}
-                        className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
-                          location.pathname.includes("/bookings") 
-                            ? "bg-catering-light-yellow text-catering-orange" 
-                            : "hover:bg-gray-100"
-                        }`}
-                      >
-                        <CalendarClock size={18} />
-                        <span>My Bookings</span>
-                      </Link>
-                      <Link
-                        to="/profile"
-                        onClick={closeMenu}
-                        className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
-                          location.pathname === "/profile" 
-                            ? "bg-catering-light-yellow text-catering-orange" 
-                            : "hover:bg-gray-100"
-                        }`}
-                      >
-                        <User size={18} />
-                        <span>Profile</span>
-                      </Link>
-                      <Link
-                        to="/dashboard"
-                        onClick={closeMenu}
-                        className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
-                          location.pathname === "/dashboard" 
-                            ? "bg-catering-light-yellow text-catering-orange" 
-                            : "hover:bg-gray-100"
-                        }`}
-                      >
-                        <LayoutDashboard size={18} />
-                        <span>Dashboard</span>
-                      </Link>
-                      
-                      {/* Vendor Menu */}
-                      <div className="mt-4 px-3">
-                        <p className="text-xs font-medium text-gray-500 mb-2">VENDOR MENU</p>
-                        <Link
-                          to="/vendor/dashboard"
-                          onClick={closeMenu}
-                          className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
-                            location.pathname === "/vendor/dashboard" 
-                              ? "bg-catering-light-yellow text-catering-orange" 
-                              : "hover:bg-gray-100"
-                          }`}
-                        >
-                          <ChefHat size={18} />
-                          <span>Vendor Dashboard</span>
-                        </Link>
-                        <Link
-                          to="/vendor/menus"
-                          onClick={closeMenu}
-                          className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
-                            location.pathname === "/vendor/menus" 
-                              ? "bg-catering-light-yellow text-catering-orange" 
-                              : "hover:bg-gray-100"
-                          }`}
-                        >
-                          <FileText size={18} />
-                          <span>Manage Menus</span>
-                        </Link>
-                      </div>
-                      
-                      {/* Admin Menu */}
-                      <div className="mt-4 px-3">
-                        <p className="text-xs font-medium text-gray-500 mb-2">ADMIN MENU</p>
-                        <Link
-                          to="/admin/dashboard"
-                          onClick={closeMenu}
-                          className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
-                            location.pathname === "/admin/dashboard" 
-                              ? "bg-catering-light-yellow text-catering-orange" 
-                              : "hover:bg-gray-100"
-                          }`}
-                        >
-                          <LayoutDashboard size={18} />
-                          <span>Admin Dashboard</span>
-                        </Link>
-                        <Link
-                          to="/admin/users"
-                          onClick={closeMenu}
-                          className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
-                            location.pathname === "/admin/users" 
-                              ? "bg-catering-light-yellow text-catering-orange" 
-                              : "hover:bg-gray-100"
-                          }`}
-                        >
-                          <Settings size={18} />
-                          <span>Manage Users</span>
-                        </Link>
-                      </div>
-                    </SignedIn>
-                    
-                    <SignedOut>
-                      <Link
-                        to="/sign-in"
-                        onClick={closeMenu}
-                        className="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100"
-                      >
-                        <LogIn size={18} />
-                        <span>Sign In</span>
-                      </Link>
-                    </SignedOut>
-                  </nav>
-                </div>
+                <nav className="flex flex-col space-y-1 px-2 py-4">
+                  <Link
+                    to="/"
+                    onClick={closeMenu}
+                    className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
+                      location.pathname === "/" 
+                        ? "bg-catering-light-yellow text-catering-orange" 
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <Home size={18} />
+                    <span>Home</span>
+                  </Link>
+                  <Link
+                    to="/vendors"
+                    onClick={closeMenu}
+                    className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
+                      location.pathname.includes("/vendors") 
+                        ? "bg-catering-light-yellow text-catering-orange" 
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <Store size={18} />
+                    <span>Vendors</span>
+                  </Link>
+                  
+                  <Link
+                    to="/order-tracking"
+                    onClick={closeMenu}
+                    className={`flex items-center space-x-3 px-3 py-2 rounded-md ${
+                      location.pathname.includes("/order-tracking") 
+                        ? "bg-catering-light-yellow text-catering-orange" 
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <Truck size={18} />
+                    <span>Track Order</span>
+                  </Link>
+                </nav>
               </div>
             </SheetContent>
           </Sheet>

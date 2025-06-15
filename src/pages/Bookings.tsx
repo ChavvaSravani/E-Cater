@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -55,7 +54,7 @@ const Bookings = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">My Bookings</h1>
-        <Button className="bg-catering-orange hover:bg-catering-orange/90">
+        <Button className="bg-catering-orange hover:bg-catering-orange/90" onClick={() => window.location.href = '/vendors'}>
           Create New Booking
         </Button>
       </div>

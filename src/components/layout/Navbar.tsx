@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton, useAuth } from "@clerk/clerk-react";
 import { 
-  Search, 
   Menu, 
   ShoppingCart, 
   Bell,
@@ -20,6 +19,7 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/components/theme-provider";
+import { SearchCommand } from "@/components/SearchCommand";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -64,7 +64,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-6">
           <Link to="/" className={`text-sm font-medium ${location.pathname === "/" ? "text-catering-orange" : "text-foreground hover:text-catering-orange"}`}>
             Home
           </Link>
@@ -82,7 +82,7 @@ const Navbar = () => {
             </Link>
           </SignedIn>
 
-          {/* User role-based links */}
+          {/* More dropdown */}
           <SignedIn>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -104,7 +104,6 @@ const Navbar = () => {
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 
-                {/* Add vendor and admin routes conditionally in a real app */}
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Vendor Access</DropdownMenuLabel>
                 <DropdownMenuGroup>
@@ -141,9 +140,9 @@ const Navbar = () => {
 
         {/* Right Section - Search, Cart, User */}
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="icon" className="text-foreground hover:text-catering-orange">
-            <Search size={20} />
-          </Button>
+          <div className="w-[200px]">
+            <SearchCommand />
+          </div>
 
           <SignedIn>
             <Button variant="ghost" size="icon" className="text-foreground hover:text-catering-orange">

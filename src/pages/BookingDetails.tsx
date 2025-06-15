@@ -1,8 +1,8 @@
-
 import { useParams, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChevronLeft, Calendar, Clock, MapPin, Users, DollarSign, Utensils, Check, X, Download, Phone, Mail } from "lucide-react";
+import { ChevronLeft, Calendar, Clock, MapPin, Users, DollarSign, Utensils, Check, X, Download, Phone, Mail, Navigation } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
@@ -14,6 +14,10 @@ const bookingData = {
   eventDate: "2023-06-15",
   eventTime: "6:00 PM - 10:00 PM",
   location: "123 Event Hall, New York, NY 10001",
+  coordinates: {
+    lat: 40.7128,
+    lng: -74.0060
+  },
   status: "confirmed",
   guests: 45,
   totalAmount: 2499.99,
@@ -49,6 +53,29 @@ const BookingDetails = () => {
   const { id } = useParams();
   // In a real app, you would fetch the booking data based on the id
   const booking = bookingData;
+  const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
+
+  // Get user's current location
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          });
+        },
+        (error) => {
+          console.error("Error getting user location:", error);
+          // Fall back to booking location if user location cannot be obtained
+          setUserLocation(booking.coordinates);
+        }
+      );
+    } else {
+      // Fall back to booking location if geolocation is not supported
+      setUserLocation(booking.coordinates);
+    }
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -154,6 +181,36 @@ const BookingDetails = () => {
               <h3 className="font-semibold mb-2">Special Requests</h3>
               <p className="text-gray-700">{booking.specialRequests}</p>
             </div>
+
+            {/* Location Map */}
+            <div>
+              <h3 className="font-semibold mb-3 flex items-center">
+                <MapPin className="h-5 w-5 mr-2 text-catering-orange" />
+                Event Location
+              </h3>
+              <div className="rounded-md overflow-hidden border" style={{ height: 300 }}>
+                <iframe
+                  title="Event Location"
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  src={`https://www.openstreetmap.org/export/embed.html?bbox=${booking.coordinates.lng-0.01}%2C${booking.coordinates.lat-0.01}%2C${booking.coordinates.lng+0.01}%2C${booking.coordinates.lat+0.01}&layer=mapnik&marker=${booking.coordinates.lat}%2C${booking.coordinates.lng}`}
+                  style={{ border: 0 }}
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="mt-2 text-sm text-gray-500">
+                <a 
+                  href={`https://www.openstreetmap.org/?mlat=${booking.coordinates.lat}&mlon=${booking.coordinates.lng}#map=16/${booking.coordinates.lat}/${booking.coordinates.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-catering-orange flex items-center hover:underline"
+                >
+                  <Navigation className="h-4 w-4 mr-1" />
+                  Get Directions
+                </a>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -178,9 +235,11 @@ const BookingDetails = () => {
                   <span>{booking.vendor.email}</span>
                 </div>
               </div>
-              <Button className="w-full bg-catering-orange hover:bg-catering-orange/90">
-                Message Vendor
-              </Button>
+              <a href={`mailto:${booking.vendor.email}`} style={{ width: '100%' }}>
+                <Button className="w-full bg-catering-orange hover:bg-catering-orange/90">
+                  Message Vendor
+                </Button>
+              </a>
             </CardContent>
           </Card>
 
@@ -205,6 +264,38 @@ const BookingDetails = () => {
               <Button variant="outline" className="w-full">
                 Edit Contact Info
               </Button>
+            </CardContent>
+          </Card>
+
+          {/* Your Current Location */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <MapPin className="h-5 w-5 mr-2 text-catering-orange" />
+                Your Current Location
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {userLocation ? (
+                <div>
+                  <div className="rounded-md overflow-hidden border" style={{ height: 200 }}>
+                    <iframe
+                      title="Your Current Location"
+                      width="100%"
+                      height="100%"
+                      frameBorder="0"
+                      src={`https://www.openstreetmap.org/export/embed.html?bbox=${userLocation.lng-0.01}%2C${userLocation.lat-0.01}%2C${userLocation.lng+0.01}%2C${userLocation.lat+0.01}&layer=mapnik&marker=${userLocation.lat}%2C${userLocation.lng}`}
+                      style={{ border: 0 }}
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  <p className="text-sm text-gray-500 mt-2">This is your current location</p>
+                </div>
+              ) : (
+                <div className="text-center py-6">
+                  <p className="text-gray-500">Loading your location...</p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

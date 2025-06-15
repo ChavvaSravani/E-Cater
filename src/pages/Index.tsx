@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Search, ChevronRight, Star, Clock, ArrowRight, CalendarClock, Users, CheckCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -82,9 +81,9 @@ const cuisineCategories = [
     image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
     count: 15
   },
-  {
+      {
     name: "Mediterranean",
-    image: "https://images.unsplash.com/photo-1599655345010-e9e5f5a10330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+    image: "/assets/images/mediterranean-cover.png",
     count: 12
   },
   {
@@ -130,6 +129,16 @@ const howItWorksSteps = [
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { isLoaded, user } = useUser();
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/vendors?search=${encodeURIComponent(searchQuery)}`);
+    } else {
+      navigate("/vendors");
+    }
+  };
 
   return (
     <div>
@@ -146,7 +155,7 @@ const HomePage = () => {
             </p>
             
             {/* Search Bar */}
-            <div className="max-w-lg mx-auto bg-white rounded-lg p-1 flex items-center shadow-lg">
+            <form onSubmit={handleSearch} className="max-w-lg mx-auto bg-white rounded-lg p-1 flex items-center shadow-lg">
               <Input
                 type="text"
                 placeholder="Search for caterers, cuisines, or dishes..."
@@ -154,11 +163,11 @@ const HomePage = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="flex-1 border-none focus-visible:ring-0 focus-visible:ring-offset-0"
               />
-              <Button className="bg-catering-orange hover:bg-catering-orange/90">
+              <Button type="submit" className="bg-catering-orange hover:bg-catering-orange/90">
                 <Search className="h-4 w-4 mr-2" />
                 Search
               </Button>
-            </div>
+            </form>
 
             {/* Quick Filters */}
             <div className="flex flex-wrap justify-center gap-2 mt-6">
