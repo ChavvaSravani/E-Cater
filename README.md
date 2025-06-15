@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Plate Palooza Catering Platform
 
 A modern, full-featured catering management platform built with React, TypeScript, and Tailwind CSS. This application provides comprehensive catering services management, order tracking, and booking functionality.
@@ -311,3 +312,6 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Vercel Deployment https://vercel.com/docs
+=======
+# E-Cater
+>>>>>>> c2fd1c573d11dfa85992d327d669819882745ed5
