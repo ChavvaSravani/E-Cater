@@ -162,14 +162,6 @@ const Navbar = () => {
               }}
             />
           </SignedIn>
-
-          <SignedOut>
-            <Link to="/sign-in">
-              <Button className="bg-catering-orange hover:bg-catering-orange/90 text-white">
-                <LogIn className="mr-2 h-4 w-4" /> Sign In
-              </Button>
-            </Link>
-          </SignedOut>
         </div>
       </div>
     </header>

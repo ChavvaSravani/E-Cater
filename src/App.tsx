@@ -23,6 +23,15 @@ import AdminVendors from "./pages/admin/AdminVendors";
 import VendorRegistration from "./pages/vendor/VendorRegistration";
 import FoodItemUpload from "./pages/vendor/FoodItemUpload";
 import OrderTracking from "./pages/OrderTracking";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import FAQ from "./pages/FAQ";
+import VendorLogin from "./pages/vendor/VendorLogin";
+import Benefits from "./pages/vendor/Benefits";
+import Resources from "./pages/vendor/Resources";
+import Help from "./pages/Help";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +61,12 @@ const App = () => (
             <Route path="vendors/:id" element={<VendorDetails />} />
             <Route path="vendor/register" element={<VendorRegistration />} />
             <Route path="order-tracking" element={<OrderTracking />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="help" element={<Help />} />
+            <Route path="terms" element={<Terms />} />
+            <Route path="privacy" element={<Privacy />} />
             
             {/* Protected Routes */}
             <Route
@@ -120,6 +135,16 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="vendor/login"
+              element={
+                <ProtectedRoute>
+                  <VendorLogin />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="vendor/benefits" element={<Benefits />} />
+            <Route path="vendor/resources" element={<Resources />} />
 
             {/* Admin Routes */}
             <Route

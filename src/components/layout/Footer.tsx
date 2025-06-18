@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { MapPin, Mail, Phone } from "lucide-react";
 
@@ -24,7 +23,7 @@ const Footer = () => {
             <div className="flex flex-col space-y-2">
               <div className="flex items-start space-x-3">
                 <MapPin size={16} className="text-catering-orange mt-0.5" />
-                <span className="text-sm text-gray-600">GLCE 12345</span>
+                <span className="text-sm text-gray-600">GLEC </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone size={16} className="text-catering-orange" />
@@ -67,6 +66,11 @@ const Footer = () => {
                 </Link>
               </li>
             </ul>
+            <div className="mt-4 flex justify-center md:justify-start">
+              <Link to="/about">
+                <button className="bg-catering-orange text-white px-6 py-2 rounded-lg font-semibold shadow hover:bg-catering-orange/90 transition">About</button>
+              </Link>
+            </div>
           </div>
           
           {/* For Vendors */}
@@ -74,7 +78,7 @@ const Footer = () => {
             <h3 className="text-base font-semibold mb-4">For Vendors</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/vendor/join" className="text-sm text-gray-600 hover:text-catering-orange">
+                <Link to="/vendor/register" className="text-sm text-gray-600 hover:text-catering-orange">
                   Join as Vendor
                 </Link>
               </li>
@@ -118,16 +122,6 @@ const Footer = () => {
               <li>
                 <Link to="/privacy" className="text-sm text-gray-600 hover:text-catering-orange">
                   Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/refund" className="text-sm text-gray-600 hover:text-catering-orange">
-                  Refund Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/cookie-policy" className="text-sm text-gray-600 hover:text-catering-orange">
-                  Cookie Policy
                 </Link>
               </li>
             </ul>
